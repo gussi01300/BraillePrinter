@@ -41,4 +41,4 @@ for i in range(0,len(txt)):
     print(unicode2dot_position_code(BRAILLE_MAP[txt[i].lower()]['unicode']))
     braille = braille + unicode2char(BRAILLE_MAP[txt[i].lower()]['unicode'])
 
-print(braille)
+print(braille)#test
