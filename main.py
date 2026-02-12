@@ -44,8 +44,8 @@ braille_table = {
     "0": {"unicode": "⠚", "bin": "010110"},
 
     # Special signs
-    #"number_sign": {"unicode": "⠼", "bin": "001111"},
-    #"capital_sign": {"unicode": "⠠", "bin": "000001"},
+    "number_sign": {"unicode": "⠼", "bin": "001111"},
+    "capital_sign": {"unicode": "⠠", "bin": "000001"},
     " ": {"unicode": "⠀", "bin": "000000"},
 
     # Punctuation
@@ -60,12 +60,31 @@ braille_table = {
     "/": {"unicode": "⠌", "bin": "001100"}
 }
 
-def txt_to_braille(text):
-    braille = ""
+
+def txt_to_braille(text, dotmode):
+    parts = []
+    number_mode = False
+    if dotmode:
+        mode = "bin"
+    else:
+        mode = "unicode"
     for char in text:
-        char = char.lower()
-        braille = braille + braille_table[char]["unicode"]
-    return braille
+
+        is_digit = char.isdigit()
+        is_upper = char.isupper()
+
+        if is_digit and not number_mode:
+            parts.append(braille_table["number_sign"][mode])
+        if is_upper:
+            parts.append(braille_table["capital_sign"][mode])
+
+        parts.append(braille_table[char.lower()][mode])
+
+        number_mode = is_digit
+    if dotmode:
+        return parts
+    else:
+        return "".join(parts)
 
 def txt_to_dotpattern(text):
     dotpattern = []
@@ -84,9 +103,7 @@ def save_list_to_csv(data, filename=f"/Users/gustav/Code/Python/BraillePrinter/C
 
 
 
-txt = "The quick brown fox jumps over the lazy dog"
+txt = "The quick brown fox jumps over the 99 lazy dogs."
 
 
-print(txt_to_braille(txt))
-print(txt_to_dotpattern(txt))
-save_list_to_csv(txt_to_dotpattern(txt))
+print(txt_to_braille(txt,False))
