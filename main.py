@@ -1,3 +1,6 @@
+import csv
+from datetime import datetime
+
 braille_table = {
 
     # Letters
@@ -56,12 +59,34 @@ braille_table = {
     "-": {"unicode": "⠤", "bin": "001001"},
     "/": {"unicode": "⠌", "bin": "001100"}
 }
-Csv_out = []
-braille = ""
-txt = "The quick brown fox jumps over the lazy dog."
-for char in txt:
-    char = char.lower()
-    braille = braille + braille_table[char]["unicode"]
+
+def txt_to_braille(text):
+    braille = ""
+    for char in text:
+        char = char.lower()
+        braille = braille + braille_table[char]["unicode"]
+    return braille
+
+def txt_to_dotpattern(text):
+    dotpattern = []
+    for char in text:
+        char = char.lower()
+        dotpattern.append(braille_table[char]["bin"])
+    return dotpattern
+
+timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+def save_list_to_csv(data, filename=f"/Users/gustav/Code/Python/BraillePrinter/CSV_Outputs/DebugFrom{timestamp}"): #Temporary Output, is in .gitignore
+    with open(filename, "w", newline="", encoding="utf-8") as f:
+        writer = csv.writer(f)
+        writer.writerow(data)
 
 
-print(braille)
+
+
+
+txt = "The quick brown fox jumps over the lazy dog"
+
+
+print(txt_to_braille(txt))
+print(txt_to_dotpattern(txt))
+save_list_to_csv(txt_to_dotpattern(txt))
