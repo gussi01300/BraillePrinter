@@ -102,8 +102,8 @@ def save_list_to_csv(data, filename=f"/Users/gustav/Code/Python/BraillePrinter/C
 
 
 
-
+is_dotmode = False
 txt = "The quick brown fox jumps over the 99 lazy dogs."
 
 
-print(txt_to_braille(txt,False))
+print(txt_to_braille(txt,is_dotmode))
