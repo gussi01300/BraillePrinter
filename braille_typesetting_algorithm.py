@@ -58,3 +58,4 @@ FINAL RESULT (clean A4 grid with 20 mm margins)
 - Line spacing (baseline-to-baseline): 10.0 mm
 - Free spacing between cells (edge-to-edge): ~2.0 mm
 '''
+
