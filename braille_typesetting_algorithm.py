@@ -1,5 +1,4 @@
 from pagespec import PageSpec
-from braille_encode import measure
 
 specs = PageSpec()
 def calc_coordinates():

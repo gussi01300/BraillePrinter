@@ -1,11 +1,16 @@
+from pagespec import PageSpec
+from encoder import encode_cells, measure, to_unicode, to_dotpatterns
 
-from braille_encode import txt_to_braille
+def main():
+    specs = PageSpec()
 
+    text = "Ab 12.5!"
+    cells = encode_cells(text)
 
+    print("text:", text)
+    print("cells:", measure(text))
+    print("unicode:", to_unicode(text))
+    print("dots:", to_dotpatterns(text))
 
-
-is_dotmode = True          #True returns a list with the dotpatterns, False returns a braille string
-txt = "The quick brown fox jumps over the 99 lazy dogs."
-
-
-print(txt_to_braille(txt,is_dotmode))
+if __name__ == "__main__":
+    main()

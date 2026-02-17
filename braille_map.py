@@ -1,58 +1,73 @@
-BRAILLE_MAP = {
+# braille_map.py
+# UEB (Unified English Braille) - basic cells for uncontracted text handling.
+# dots string format: "dot1..dot6" as bits (1=raised, 0=flat)
 
-    # Letters
-    "a": {"unicode": "⠁", "bin": "100000"},
-    "b": {"unicode": "⠃", "bin": "110000"},
-    "c": {"unicode": "⠉", "bin": "100100"},
-    "d": {"unicode": "⠙", "bin": "100110"},
-    "e": {"unicode": "⠑", "bin": "100010"},
-    "f": {"unicode": "⠋", "bin": "110100"},
-    "g": {"unicode": "⠛", "bin": "110110"},
-    "h": {"unicode": "⠓", "bin": "110010"},
-    "i": {"unicode": "⠊", "bin": "010100"},
-    "j": {"unicode": "⠚", "bin": "010110"},
-    "k": {"unicode": "⠅", "bin": "101000"},
-    "l": {"unicode": "⠇", "bin": "111000"},
-    "m": {"unicode": "⠍", "bin": "101100"},
-    "n": {"unicode": "⠝", "bin": "101110"},
-    "o": {"unicode": "⠕", "bin": "101010"},
-    "p": {"unicode": "⠏", "bin": "111100"},
-    "q": {"unicode": "⠟", "bin": "111110"},
-    "r": {"unicode": "⠗", "bin": "111010"},
-    "s": {"unicode": "⠎", "bin": "011100"},
-    "t": {"unicode": "⠞", "bin": "011110"},
-    "u": {"unicode": "⠥", "bin": "101001"},
-    "v": {"unicode": "⠧", "bin": "111001"},
-    "w": {"unicode": "⠺", "bin": "010111"},
-    "x": {"unicode": "⠭", "bin": "101101"},
-    "y": {"unicode": "⠽", "bin": "101111"},
-    "z": {"unicode": "⠵", "bin": "101011"},
+# --- SPACE (blank cell) ---
+SPACE = {"name": "SPACE", "unicode": "⠀", "dots": "000000"}  # U+2800
 
-    # Numbers (same shapes as a–j)
-    "1": {"unicode": "⠁", "bin": "100000"},
-    "2": {"unicode": "⠃", "bin": "110000"},
-    "3": {"unicode": "⠉", "bin": "100100"},
-    "4": {"unicode": "⠙", "bin": "100110"},
-    "5": {"unicode": "⠑", "bin": "100010"},
-    "6": {"unicode": "⠋", "bin": "110100"},
-    "7": {"unicode": "⠛", "bin": "110110"},
-    "8": {"unicode": "⠓", "bin": "110010"},
-    "9": {"unicode": "⠊", "bin": "010100"},
-    "0": {"unicode": "⠚", "bin": "010110"},
-
-    # Special signs
-    "number_sign": {"unicode": "⠼", "bin": "001111"},
-    "capital_sign": {"unicode": "⠠", "bin": "000001"},
-    " ": {"unicode": "⠀", "bin": "000000"},
-
-    # Punctuation
-    ".": {"unicode": "⠲", "bin": "010011"},
-    ",": {"unicode": "⠂", "bin": "010000"},
-    ";": {"unicode": "⠆", "bin": "011000"},
-    ":": {"unicode": "⠒", "bin": "010010"},
-    "?": {"unicode": "⠦", "bin": "011001"},
-    "!": {"unicode": "⠖", "bin": "011010"},
-    "'": {"unicode": "⠄", "bin": "001000"},
-    "-": {"unicode": "⠤", "bin": "001001"},
-    "/": {"unicode": "⠌", "bin": "001100"}
+# --- CONTROL / INDICATORS (UEB) ---
+# Capital indicator: ⠠ (dot 6)  | Numeric indicator: ⠼ (dots 3-4-5-6)
+CTRL = {
+    "CAP": {"name": "CAP", "unicode": "⠠", "dots": "000001"},
+    "NUM": {"name": "NUM", "unicode": "⠼", "dots": "001111"},
 }
+
+# --- LETTERS a-z (standard literary braille) ---
+LETTERS = {
+    "a": {"unicode": "⠁", "dots": "100000"},
+    "b": {"unicode": "⠃", "dots": "110000"},
+    "c": {"unicode": "⠉", "dots": "100100"},
+    "d": {"unicode": "⠙", "dots": "100110"},
+    "e": {"unicode": "⠑", "dots": "100010"},
+    "f": {"unicode": "⠋", "dots": "110100"},
+    "g": {"unicode": "⠛", "dots": "110110"},
+    "h": {"unicode": "⠓", "dots": "110010"},
+    "i": {"unicode": "⠊", "dots": "010100"},
+    "j": {"unicode": "⠚", "dots": "010110"},
+    "k": {"unicode": "⠅", "dots": "101000"},
+    "l": {"unicode": "⠇", "dots": "111000"},
+    "m": {"unicode": "⠍", "dots": "101100"},
+    "n": {"unicode": "⠝", "dots": "101110"},
+    "o": {"unicode": "⠕", "dots": "101010"},
+    "p": {"unicode": "⠏", "dots": "111100"},
+    "q": {"unicode": "⠟", "dots": "111110"},
+    "r": {"unicode": "⠗", "dots": "111010"},
+    "s": {"unicode": "⠎", "dots": "011100"},
+    "t": {"unicode": "⠞", "dots": "011110"},
+    "u": {"unicode": "⠥", "dots": "101001"},
+    "v": {"unicode": "⠧", "dots": "111001"},
+    "w": {"unicode": "⠺", "dots": "010111"},
+    "x": {"unicode": "⠭", "dots": "101101"},
+    "y": {"unicode": "⠽", "dots": "101111"},
+    "z": {"unicode": "⠵", "dots": "101011"},
+}
+
+# --- DIGITS (UEB): after NUM sign, 1-0 are letters a-j ---
+DIGIT_MAP = {
+    "1": "a", "2": "b", "3": "c", "4": "d", "5": "e",
+    "6": "f", "7": "g", "8": "h", "9": "i", "0": "j",
+}
+
+# --- PUNCTUATION (UEB basics) ---
+# These are standard single-cell signs commonly used in UEB.
+PUNCT = {
+    ",": {"unicode": "⠂", "dots": "010000"},
+    ";": {"unicode": "⠆", "dots": "011000"},
+    ":": {"unicode": "⠒", "dots": "010010"},
+    ".": {"unicode": "⠲", "dots": "010011"},  # also used for dot/decimal point
+    "!": {"unicode": "⠖", "dots": "011010"},
+    "?": {"unicode": "⠦", "dots": "011001"},
+    "-": {"unicode": "⠤", "dots": "001001"},
+    "/": {"unicode": "⠌", "dots": "001100"},  # solidus/forward slash (common)
+    "'": {"unicode": "⠄", "dots": "001000"},  # apostrophe
+
+    # UEB “nonspecific” one-cell quotation marks
+    # opening: ⠦  closing: ⠴
+    "“": {"unicode": "⠦", "dots": "011001"},  # treat as opening one-cell quote
+    "”": {"unicode": "⠴", "dots": "001011"},  # closing one-cell quote
+}
+
+# Optional: direct lookup for single characters (letters + punct + space)
+CHAR_MAP = {" ": SPACE}
+CHAR_MAP.update({k: {"name": k, **v} for k, v in LETTERS.items()})
+CHAR_MAP.update({k: {"name": k, **v} for k, v in PUNCT.items()})
