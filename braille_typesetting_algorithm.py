@@ -1,4 +1,5 @@
 from pagespec import PageSpec
+from braille_encode import measure
 
 specs = PageSpec()
 def calc_coordinates():
@@ -7,5 +8,8 @@ def calc_coordinates():
         coordinate = (col, line)
         print(coordinate)
 
+
+calc_coordinates()
 print(specs.max_cols, specs.max_lines)
 #Uncompleted, I forgot linebreak rules
+

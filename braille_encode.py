@@ -24,3 +24,14 @@ def txt_to_braille(text, dotmode):
         return parts
     else:
         return "".join(parts)
+    
+def measure(word):
+    length = 0
+    if word.isdigit():
+        length = 1 + len(word)
+    for char in word:
+        if char.isupper():
+            length += 2
+        elif char.islower():
+            length += 1
+    return length
