@@ -1,6 +1,6 @@
 from pagespec import PageSpec
 from dataclasses import dataclass
-from encoder import Cell, encode_cells
+from encoder import Cell
 from typing import List, Tuple
 
 
@@ -20,7 +20,7 @@ def typeset(cells: List[Cell]) -> List[Positioned_Cell]:
     i = 0
     row = 0
     col = 0
-    page = 0
+    page = 1
 
     while i < len(cells):
 
