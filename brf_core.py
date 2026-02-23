@@ -1,4 +1,4 @@
-from braille_map import BRAILLE_MAP as braille_table
+from braille_map import PUNCT, LETTERS
 from BRFParser import BRFParser
 from braille_viewer import show_braille_viewer
 
@@ -22,6 +22,8 @@ SCALE = 3
 
 # Page spacing (vertical direction, unit: mm)
 PAGE_SPACING_MM = 10  
+
+braille_table = {**LETTERS, **PUNCT}  
 
 # ====================== Utility Functions ======================
 def mm_to_px(mm):
