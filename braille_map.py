@@ -54,20 +54,31 @@ PUNCT = {
     ",": {"unicode": "⠂", "dots": "010000"},
     ";": {"unicode": "⠆", "dots": "011000"},
     ":": {"unicode": "⠒", "dots": "010010"},
-    ".": {"unicode": "⠲", "dots": "010011"},  # also used for dot/decimal point
+    ".": {"unicode": "⠲", "dots": "010011"},
     "!": {"unicode": "⠖", "dots": "011010"},
     "?": {"unicode": "⠦", "dots": "011001"},
     "-": {"unicode": "⠤", "dots": "001001"},
-    "/": {"unicode": "⠌", "dots": "001100"},  # solidus/forward slash (common)
-    "'": {"unicode": "⠄", "dots": "001000"},  # apostrophe
-
-    # UEB “nonspecific” one-cell quotation marks
-    # opening: ⠦  closing: ⠴
-    "“": {"unicode": "⠦", "dots": "011001"},  # treat as opening one-cell quote
-    "”": {"unicode": "⠴", "dots": "001011"},  # closing one-cell quote
-    # Punctuation  
-    '"': {"unicode": "⠂", "dots": "010000"},  
-    '#': {"unicode": "⠄", "dots": "001000"},
+    "/": {"unicode": "⠌", "dots": "001100"},
+    "'": {"unicode": "⠄", "dots": "001000"},
+    " ": {"unicode": "⠀", "dots": "000000"},
+    "“": {"unicode": "⠦", "dots": "011001"},
+    "”": {"unicode": "⠴", "dots": "001011"},
+    '"': {"unicode": "⠂", "dots": "010000"},
+    "#": {"unicode": "⠄", "dots": "001000"},
+    "$": {"unicode": "⠅", "dots": "101000"},
+    "%": {"unicode": "⠆", "dots": "011000"},
+    "&": {"unicode": "⠇", "dots": "111000"},
+    "(": {"unicode": "⠉", "dots": "100100"},
+    ")": {"unicode": "⠊", "dots": "010100"},
+    "*": {"unicode": "⠋", "dots": "110100"},
+    "+": {"unicode": "⠌", "dots": "001100"},
+    "\\": {"unicode": "⠳", "dots": "110101"},
+    "<": {"unicode": "⠬", "dots": "001110"},
+    "=": {"unicode": "⠿", "dots": "111110"},
+    ">": {"unicode": "⠜", "dots": "100110"},
+    "@": {"unicode": "⠈", "dots": "000100"},
+    "[": {"unicode": "⠪", "dots": "010101"},
+    "]": {"unicode": "⠻", "dots": "011101"},
 }
 
 # Optional: direct lookup for single characters (letters + punct + space)
