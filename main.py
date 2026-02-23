@@ -1,16 +1,12 @@
-from pagespec import PageSpec
-from encoder import encode_cells, measure, to_unicode, to_dotpatterns
+from encoder import encode_cells
+from braille_typesetting_algorithm import typeset
 
 def main():
-    specs = PageSpec()
 
     text = "Ab 12.5!"
-    cells = encode_cells(text)
-
-    print("text:", text)
-    print("cells:", measure(text))
-    print("unicode:", to_unicode(text))
-    print("dots:", to_dotpatterns(text))
+    out = typeset(encode_cells(text))
+    print(out)
+    
 
 if __name__ == "__main__":
     main()
