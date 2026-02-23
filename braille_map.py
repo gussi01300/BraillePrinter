@@ -65,6 +65,9 @@ PUNCT = {
     # opening: ⠦  closing: ⠴
     "“": {"unicode": "⠦", "dots": "011001"},  # treat as opening one-cell quote
     "”": {"unicode": "⠴", "dots": "001011"},  # closing one-cell quote
+    # Punctuation  
+    '"': {"unicode": "⠂", "dots": "010000"},  
+    '#': {"unicode": "⠄", "dots": "001000"},
 }
 
 # Optional: direct lookup for single characters (letters + punct + space)

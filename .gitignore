@@ -1,5 +1,4 @@
 .venv
 .vscode
 __pycache__
-braille_encode_old.py
-demo_brf.txt
+OldFiles
