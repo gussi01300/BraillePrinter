@@ -4,8 +4,6 @@ from encoder import Cell
 from typing import List, Tuple
 
 
-specs = PageSpec()
-
 @dataclass 
 class Positioned_Cell:
     Cell_info: Cell
@@ -21,6 +19,7 @@ def typeset(cells: List[Cell]) -> List[Positioned_Cell]:
     row = 0
     col = 0
     page = 1
+    
 
     while i < len(cells):
 
@@ -40,6 +39,7 @@ def typeset(cells: List[Cell]) -> List[Positioned_Cell]:
     return out
 
 def pack(word_cells: List[Cell], current_col: int, line: int, out: List[Positioned_Cell], page: int) -> Tuple[List[Cell], int, int, List[Positioned_Cell], int]:
+    specs = PageSpec()
     max_cols = specs.max_cols
     word_length = len(word_cells)
 
@@ -150,6 +150,7 @@ def pack(word_cells: List[Cell], current_col: int, line: int, out: List[Position
         return [], current_col, line, out, page
 
 def Checkpage(line: int, page: int) -> Tuple[int, int]:
+    specs = PageSpec()
     if line >= specs.max_lines:
         line = 0
         page += 1
