@@ -43,10 +43,26 @@ def pack(word_cells: List[Cell], current_col: int, line: int, out: List[Position
     max_cols = specs.max_cols
     word_length = len(word_cells)
 
+    
+
+
+
     #If word length is bigger that max_cols (Hardbreak)
     if word_length > max_cols:
 
         for i in word_cells:
+
+            if i.name == "\n":
+                line += 1
+                line, page = Checkpage(line, page)
+                current_col = 0
+                continue
+
+            if i.name == "\\n":
+                line += 2
+                line, page = Checkpage(line, page)
+                current_col = 0
+                continue
 
             if current_col >= max_cols:
                 line += 1
@@ -74,7 +90,20 @@ def pack(word_cells: List[Cell], current_col: int, line: int, out: List[Position
         line, page = Checkpage(line, page)
         current_col = 0
 
-        for i in (word_cells):
+        for i in word_cells:
+
+            if i.name == "\n":
+                line += 1
+                line, page = Checkpage(line, page)
+                current_col = 0
+                continue
+
+            if i.name == "\\n":
+                line += 2
+                line, page = Checkpage(line, page)
+                current_col = 0
+                continue
+
             out.append(Positioned_Cell(Cell_info = i, col = current_col, row = line, page = page))
             current_col += 1
 
@@ -93,6 +122,19 @@ def pack(word_cells: List[Cell], current_col: int, line: int, out: List[Position
     if word_length <= max_cols - current_col:
 
         for i in word_cells:
+
+            if i.name == "\n":
+                line += 1
+                line, page = Checkpage(line, page)
+                current_col = 0
+                continue
+
+            if i.name == "\\n":
+                line += 2
+                line, page = Checkpage(line, page)
+                current_col = 0
+                continue
+
             out.append(Positioned_Cell(Cell_info = i, col = current_col, row = line, page = page))
             current_col += 1
 
@@ -113,5 +155,3 @@ def Checkpage(line: int, page: int) -> Tuple[int, int]:
         page += 1
     return line, page
     
-
-
