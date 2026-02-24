@@ -15,6 +15,15 @@ class PageSpec:
     cell_with: float = 3.0
     cell_height: float = 6.0
 
+    def cell_to_mm(self, col: int, row: int,) -> tuple[float, float]:
+        """
+        Convert logical cell coordinates (col, row, page)
+        into absolute mm position on the paper.
+        """
+        x = self.margin_left + col * self.cell_pitch_x
+        y = self.margin_top + row * self.line_pitch_y
+        return x, y
+
     @property
     def usable_w(self) -> float:
         return self.paper_w - self.margin_left - self.margin_right

@@ -34,6 +34,13 @@ def encode_cells(text: str) -> List[Cell]:
     for i, ch in enumerate(text):
         nxt = text[i + 1] if i + 1 < n else ""
 
+        if ch == "\n":
+            cells.append(Cell(name="\n", dots="000000"))
+            continue
+        if ch == "\\n":
+            cells.append(Cell(name="\\n", sots="000000"))
+            continue
+
         # --- Space (blank cell) ---
         if ch == " ":
             number_mode = False

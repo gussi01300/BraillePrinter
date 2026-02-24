@@ -1,10 +1,8 @@
 from pagespec import PageSpec
 from dataclasses import dataclass
-from encoder import Cell, encode_cells
+from encoder import Cell
 from typing import List, Tuple
 
-
-specs = PageSpec()
 
 @dataclass 
 class Positioned_Cell:
@@ -20,7 +18,8 @@ def typeset(cells: List[Cell]) -> List[Positioned_Cell]:
     i = 0
     row = 0
     col = 0
-    page = 0
+    page = 1
+    
 
     while i < len(cells):
 
@@ -40,13 +39,30 @@ def typeset(cells: List[Cell]) -> List[Positioned_Cell]:
     return out
 
 def pack(word_cells: List[Cell], current_col: int, line: int, out: List[Positioned_Cell], page: int) -> Tuple[List[Cell], int, int, List[Positioned_Cell], int]:
+    specs = PageSpec()
     max_cols = specs.max_cols
     word_length = len(word_cells)
+
+    
+
+
 
     #If word length is bigger that max_cols (Hardbreak)
     if word_length > max_cols:
 
         for i in word_cells:
+
+            if i.name == "\n":
+                line += 1
+                line, page = Checkpage(line, page)
+                current_col = 0
+                continue
+
+            if i.name == "\\n":
+                line += 2
+                line, page = Checkpage(line, page)
+                current_col = 0
+                continue
 
             if current_col >= max_cols:
                 line += 1
@@ -74,7 +90,20 @@ def pack(word_cells: List[Cell], current_col: int, line: int, out: List[Position
         line, page = Checkpage(line, page)
         current_col = 0
 
-        for i in (word_cells):
+        for i in word_cells:
+
+            if i.name == "\n":
+                line += 1
+                line, page = Checkpage(line, page)
+                current_col = 0
+                continue
+
+            if i.name == "\\n":
+                line += 2
+                line, page = Checkpage(line, page)
+                current_col = 0
+                continue
+
             out.append(Positioned_Cell(Cell_info = i, col = current_col, row = line, page = page))
             current_col += 1
 
@@ -93,6 +122,19 @@ def pack(word_cells: List[Cell], current_col: int, line: int, out: List[Position
     if word_length <= max_cols - current_col:
 
         for i in word_cells:
+
+            if i.name == "\n":
+                line += 1
+                line, page = Checkpage(line, page)
+                current_col = 0
+                continue
+
+            if i.name == "\\n":
+                line += 2
+                line, page = Checkpage(line, page)
+                current_col = 0
+                continue
+
             out.append(Positioned_Cell(Cell_info = i, col = current_col, row = line, page = page))
             current_col += 1
 
@@ -108,10 +150,9 @@ def pack(word_cells: List[Cell], current_col: int, line: int, out: List[Position
         return [], current_col, line, out, page
 
 def Checkpage(line: int, page: int) -> Tuple[int, int]:
+    specs = PageSpec()
     if line >= specs.max_lines:
         line = 0
         page += 1
     return line, page
     
-
-
