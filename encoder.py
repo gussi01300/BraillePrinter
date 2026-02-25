@@ -37,9 +37,6 @@ def encode_cells(text: str) -> List[Cell]:
         if ch == "\n":
             cells.append(Cell(name="\n", dots="000000"))
             continue
-        if ch == "\\n":
-            cells.append(Cell(name="\\n", sots="000000"))
-            continue
 
         # --- Space (blank cell) ---
         if ch == " ":

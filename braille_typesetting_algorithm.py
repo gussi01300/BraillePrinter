@@ -58,11 +58,6 @@ def pack(word_cells: List[Cell], current_col: int, line: int, out: List[Position
                 current_col = 0
                 continue
 
-            if i.name == "\\n":
-                line += 2
-                line, page = Checkpage(line, page)
-                current_col = 0
-                continue
 
             if current_col >= max_cols:
                 line += 1
@@ -98,12 +93,6 @@ def pack(word_cells: List[Cell], current_col: int, line: int, out: List[Position
                 current_col = 0
                 continue
 
-            if i.name == "\\n":
-                line += 2
-                line, page = Checkpage(line, page)
-                current_col = 0
-                continue
-
             out.append(Positioned_Cell(Cell_info = i, col = current_col, row = line, page = page))
             current_col += 1
 
@@ -125,12 +114,6 @@ def pack(word_cells: List[Cell], current_col: int, line: int, out: List[Position
 
             if i.name == "\n":
                 line += 1
-                line, page = Checkpage(line, page)
-                current_col = 0
-                continue
-
-            if i.name == "\\n":
-                line += 2
                 line, page = Checkpage(line, page)
                 current_col = 0
                 continue

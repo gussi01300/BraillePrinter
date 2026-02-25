@@ -1,0 +1,53 @@
+[TEST-HEADER]  Start  —  multiple   spaces, tabs->	<-here, and trailing spaces.      
+
+Line with ONLY ASCII: ABC abc 123.
+Line with mixed CASE: aAaA bBbB cCcC.
+Line with numbers: 0 1 2 3 4 5 6 7 8 9 10 11 12 99 100 101 1000.
+Line with punctuation: . , ; : ! ? ( ) [ ] { } < > " ' ` ~ - – — _ / \ | @ # $ % ^ & * + =
+
+Quotes test: "double", 'single', “curly double”, ‘curly single’.
+Dashes test: hyphen-minus - ; en–dash – ; em—dash — ; spaced — dash.
+Ellipsis test: ... … .. . . .
+
+Math-like: 1+2=3, 5*7=35, 9/3=3, 2^10=1024, (a+b)*(c-d).
+Paths: /usr/local/bin, C:\Users\Name\file.txt, ../relative/./path/.., \\server\share.
+Emails/URLs-ish: test@example.com, www.example.com, https://example.com/path?x=1&y=2#frag
+
+Accents & non-ASCII (should either map or fail loudly):
+á é í ó ú â ê î ô û à è ì ò ù ã õ ç ü ß ø å æ œ ñ
+
+Whitespace torture:
+- leading spaces:
+    indented line level 1
+        indented line level 2
+- tabs between words: one		two	three
+- multiple empty lines follow:
+
+
+(end of empties)
+
+VeryShortWords: a I in on at by to of.
+VeryLongWord_NoSpaces_ShouldForceErrorOrHyphenPolicy:
+SUPERCALIFRAGILISTICEXPIALIDOCIOUSSUPERCALIFRAGILISTICEXPIALIDOCIOUSSUPERCALIFRAGILISTICEXPIALIDOCIOUS
+
+Edge-fit words (tune by repeating X to hit exact max_cols):
+XXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXX X
+XXXXXXXXXXXXXXXXXXXXXXXXXX XX
+XXXXXXXXXXXXXXXXXXXXXXXXXX XXX
+
+Paragraph wrap test:
+This paragraph is meant to be long enough to wrap across multiple lines and ideally multiple pages depending on your max_cols and max_lines settings. It includes commas, periods, and someNumbers123 embeddedInsideWords to see if your encoder splits tokens correctly or keeps them together.
+
+Repeated pattern block (find off-by-one + page breaks):
+01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20
+21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40
+41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60
+
+Page-break hammer (copy this stanza multiple times if needed):
+The quick brown fox jumps over the lazy dog. 0123456789 !?.,;:-—()[]{} "/\ @#$%^&*+=
+The quick brown fox jumps over the lazy dog. 0123456789 !?.,;:-—()[]{} "/\ @#$%^&*+=
+The quick brown fox jumps over the lazy dog. 0123456789 !?.,;:-—()[]{} "/\ @#$%^&*+=
+The quick brown fox jumps over the lazy dog. 0123456789 !?.,;:-—()[]{} "/\ @#$%^&*+=
+
+[TEST-FOOTER] End.
