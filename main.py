@@ -16,18 +16,22 @@ def handle_txt(file_path: Path):
         text = f.read()
 
     out = format(typeset(encode_cells(text)))
+    
     out_list = []
-    for page, page_dots in out.items():
-        dots = []
+
+    for page_dots in out:
+        page_list = []
         for dot in page_dots:
-            dots.append(braille_dot_position(dot))
-        out_list.append(dots)
+            dot_pos = braille_dot_position(dot[0], dot[1], page_spec.margin_left, page_spec.margin_top, page_spec.cell_width, page_spec.cell_height)
+            page_list.extend(dot_pos)
+        out_list.append(page_list)
+
 
     show_braille_viewer(
         page_data=out_list,
         page_width_mm=page_spec.paper_w,
         page_height_mm=page_spec.paper_h,
-        margin_left_mm=page_spec.margin_left,  # Fixed margin for txt files
+        margin_left_mm=page_spec.margin_left,
         margin_right_mm=page_spec.margin_right,
         margin_top_mm=page_spec.margin_top,
         margin_bottom_mm=page_spec.margin_bottom,
