@@ -22,10 +22,8 @@ def handle_txt(file_path: Path):
     for page_dots in out:
         page_list = []
         for dot in page_dots:
-            dot_pos = braille_dot_position(dot[0], dot[1], page_spec.margin_left, page_spec.margin_top, page_spec.cell_width, page_spec.cell_height)
-            page_list.extend(dot_pos)
-        out_list.append(page_list)
-
+            dots.append(braille_dot_position(dot))
+        out_list.append(dots)   
 
     show_braille_viewer(
         page_data=out_list,
