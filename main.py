@@ -64,7 +64,7 @@ $$ |   $$ |$$$$\ $$ |    \_$$ |
     \_/     \______/ \__|\______|
                       
 Welcome to Braille Printer!
-This tool converts text and BRF files into gcode for printing.                                                                                                                   
+This tool converts text and BRF files into G-Code for printing.                                                                                                                   
                                                                                                                           
 ''')    
 
