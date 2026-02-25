@@ -13,8 +13,22 @@ def handle_txt(file_path: Path):
         text = f.read()
 
     out = format(typeset(encode_cells(text)))
-    out = braille_dot_position(out)
-    print(out)
+    out_list = []
+    for page, page_dots in out.items():
+        dots = []
+        for dot in page_dots:
+            dots.append(braille_dot_position(dot))
+        out_list.append(dots)
+    show_braille_viewer(
+        page_data=out_list,
+        page_width_mm=page_spec.width_mm,
+        page_height_mm=page_spec.height_mm,
+        margin_left_mm=10,  # Fixed margin for txt files
+        margin_right_mm=page_spec.margin_right_mm,
+        margin_top_mm=page_spec.margin_top_mm,
+        margin_bottom_mm=page_spec.margin_bottom_mm,
+        scale=4
+    )   
 
 def handle_brf(file_path: Path):
     print(".brf file detected")
