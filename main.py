@@ -6,8 +6,8 @@ from formater import format
 from brf_core import process_brf_file, braille_dot_position
 from braille_viewer import show_braille_viewer
 from pagespec import PageSpec
-
-
+from brf_core import A4_HEIGHT, A4_WIDTH, MARGIN_LEFT,MARGIN_RIGHT,MARGIN_TOP, MARGIN_BOTTOM, CELL_WIDTH, CELL_HEIGHT
+from dot2gcode import dots_to_gcode,save_gcode
 
 def handle_txt(file_path: Path):
     print(".txt file detected")
@@ -39,7 +39,25 @@ def handle_txt(file_path: Path):
 
 def handle_brf(file_path: Path):
     print(".brf file detected")
-    process_brf_file(file_path)
+    dots_positions = process_brf_file(file_path)
+    show_braille_viewer(
+    page_data=dots_positions,
+    page_width_mm=A4_WIDTH,
+    page_height_mm=A4_HEIGHT,
+    margin_left_mm=MARGIN_LEFT,
+    margin_right_mm=MARGIN_RIGHT,
+    margin_top_mm=MARGIN_TOP,
+    margin_bottom_mm=MARGIN_BOTTOM,
+    scale=4  # 1mm = 4 pixels (larger scale for better visibility)
+    )
+    print("Generating gcode...")
+    gcode = dots_to_gcode(dots_positions)
+    print(gcode)
+    if input("Do you want to save gcode? Press y/n to save...") == "y":
+        save_gcode(gcode, file_path.with_suffix('.gcode'))
+    print("Done.Have a nice day!")    
+
+
 
 def welcome_page():
     print('''

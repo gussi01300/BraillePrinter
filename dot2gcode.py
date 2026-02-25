@@ -7,6 +7,7 @@ G28: home all axes
 M1: dwell for dot
 M2: end of program
 '''
+from tqdm import tqdm
 
 def sort_dots(dots):
     return sorted(dots, key=lambda x: (x[1], x[0]))
@@ -14,7 +15,7 @@ def sort_dots(dots):
 def dots_to_gcode(dots_data):
     gcode = []
     gcode.append("G28; Home all axes")
-    for page_dots in dots_data:
+    for page_dots in tqdm(dots_data, desc="Generating gcode"):
     #for page_num, page_dots in dots_data.items():
         page_dots = sort_dots(page_dots)
         # gcode.append(f"G6; Page {page_num}")
