@@ -11,11 +11,14 @@ M2: end of program
 def sort_dots(dots):
     return sorted(dots, key=lambda x: (x[1], x[0]))
 
-def dots_to_gcode(dots_data, page_spec):
+def dots_to_gcode(dots_data):
     gcode = []
     gcode.append("G28; Home all axes")
-    for page_num, page_dots in dots_data.items():
-        gcode.append(f"G6; Page {page_num}")
+    for page_dots in dots_data:
+    #for page_num, page_dots in dots_data.items():
+        page_dots = sort_dots(page_dots)
+        # gcode.append(f"G6; Page {page_num}")
+        gcode.append("G6; Get paper in")    
         if not page_dots:
             gcode.append("G7; End of page (no dots)")
             continue
@@ -26,3 +29,12 @@ def dots_to_gcode(dots_data, page_spec):
         gcode.append("G7; End of page")
     gcode.append("M2; End of program")
     return gcode
+
+def save_gcode(gcode, output_path="output.gcode"):
+    with open(output_path, 'w') as f:
+        for line in gcode:
+            f.write(line + '\n')
+
+if __name__ == "__main__":
+    from brf_core import process_brf_file
+    save_gcode(dots_to_gcode(process_brf_file("blankTemplate.brf")))

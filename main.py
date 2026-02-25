@@ -4,11 +4,14 @@ from encoder import encode_cells
 from braille_typesetting_algorithm import typeset
 from formater import format
 from brf_core import process_brf_file, braille_dot_position
+from braille_viewer import show_braille_viewer
+from pagespec import PageSpec
 
 
 
 def handle_txt(file_path: Path):
     print(".txt file detected")
+    page_spec = PageSpec()
     with open(file_path, "r", encoding="utf-8") as f:
         text = f.read()
 
@@ -19,14 +22,15 @@ def handle_txt(file_path: Path):
         for dot in page_dots:
             dots.append(braille_dot_position(dot))
         out_list.append(dots)
+
     show_braille_viewer(
         page_data=out_list,
-        page_width_mm=page_spec.width_mm,
-        page_height_mm=page_spec.height_mm,
-        margin_left_mm=10,  # Fixed margin for txt files
-        margin_right_mm=page_spec.margin_right_mm,
-        margin_top_mm=page_spec.margin_top_mm,
-        margin_bottom_mm=page_spec.margin_bottom_mm,
+        page_width_mm=page_spec.paper_w,
+        page_height_mm=page_spec.paper_h,
+        margin_left_mm=page_spec.margin_left,  # Fixed margin for txt files
+        margin_right_mm=page_spec.margin_right,
+        margin_top_mm=page_spec.margin_top,
+        margin_bottom_mm=page_spec.margin_bottom,
         scale=4
     )   
 
@@ -34,7 +38,30 @@ def handle_brf(file_path: Path):
     print(".brf file detected")
     process_brf_file(file_path)
 
-    
+def welcome_page():
+    print('''
+$$$$$$$\                      $$\ $$\ $$\           $$$$$$$\                                  $$\                         
+$$  __$$\                     \__|$$ |$$ |          $$  __$$\                                 $$ |                        
+$$ |  $$ | $$$$$$\   $$$$$$\  $$\ $$ |$$ | $$$$$$\  $$ |  $$ | $$$$$$\   $$$$$$\  $$$$$$$\  $$$$$$\    $$$$$$\   $$$$$$\  
+$$$$$$$\ |$$  __$$\  \____$$\ $$ |$$ |$$ |$$  __$$\ $$$$$$$  |$$  __$$\  \____$$\ $$  __$$\ \_$$  _|  $$  __$$\ $$  __$$\ 
+$$  __$$\ $$ |  \__| $$$$$$$ |$$ |$$ |$$ |$$$$$$$$ |$$  ____/ $$ |  \__| $$$$$$$ |$$ |  $$ |  $$ |    $$$$$$$$ |$$ |  \__|
+$$ |  $$ |$$ |      $$  __$$ |$$ |$$ |$$ |$$   ____|$$ |      $$ |      $$  __$$ |$$ |  $$ |  $$ |$$\ $$   ____|$$ |      
+$$$$$$$  |$$ |      \$$$$$$$ |$$ |$$ |$$ |\$$$$$$$\ $$ |      $$ |      \$$$$$$$ |$$ |  $$ |  \$$$$  |\$$$$$$$\ $$ |      
+\_______/ \__|       \_______|\__|\__|\__| \_______|\__|      \__|       \_______|\__|  \__|   \____/  \_______|\__|      
+                                                                                                                          
+$$\    $$\  $$$$$$\        $$\   
+$$ |   $$ |$$$ __$$\     $$$$ |  
+$$ |   $$ |$$$$\ $$ |    \_$$ |  
+\$$\  $$  |$$\$$\$$ |      $$ |  
+ \$$\$$  / $$ \$$$$ |      $$ |  
+  \$$$  /  $$ |\$$$ |      $$ |  
+   \$  /   \$$$$$$  /$$\ $$$$$$\ 
+    \_/     \______/ \__|\______|
+                      
+Welcome to Braille Printer!
+This tool converts text and BRF files into gcode for printing.                                                                                                                   
+                                                                                                                          
+''')    
 
 def main():
     if len(sys.argv) < 2:
