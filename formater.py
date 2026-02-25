@@ -12,7 +12,7 @@ def format(cells: List[Positioned_Cell]) -> List:
             pages_dict[i.page] = []
         
         x_mm, y_mm = specs.cell_to_mm(i.col, i.row)
-        pages_dict[i.page].append((i.Cell_info.dots, x_mm, y_mm))
+        pages_dict[i.page].append((i.Cell_info.unicode, x_mm, y_mm))
 
     out = dict_to_list(pages_dict)
 

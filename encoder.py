@@ -1,8 +1,8 @@
 # encoder.py
 from dataclasses import dataclass
 from typing import List, Optional
-
 from braille_map import SPACE, CTRL, LETTERS, DIGIT_MAP, CHAR_MAP
+import unicodedata
 
 
 @dataclass(frozen=True)
@@ -12,10 +12,74 @@ class Cell:
     dots: str                 # e.g. "100000"
     unicode: Optional[str] = None  # for debugging/printing (optional)
 
+SPECIAL_FOLDS = {
+    "ß": "ss",
+    "æ": "ae",
+    "œ": "oe",
+    "ø": "o",
+    "å": "a",
+    "đ": "d",
+    "ð": "d",
+    "þ": "th",
+    "ł": "l",
+    "ñ": "n",
+    "ç": "c",
+}
+
+def strip_diacritics(s: str) -> str:
+    # First do special folds (handles letters that won't become plain a/e/o nicely)
+    s = "".join(SPECIAL_FOLDS.get(ch, ch) for ch in s)
+
+    # Then remove accents (á -> a, ì -> i, ü -> u, etc.)
+    s = unicodedata.normalize("NFD", s)
+    s = "".join(ch for ch in s if unicodedata.category(ch) != "Mn")
+    return unicodedata.normalize("NFC", s)
+
+
+
+
 
 def _cell_from_map(entry: dict, name_override: Optional[str] = None) -> Cell:
     name = name_override if name_override is not None else entry.get("name", "?")
     return Cell(name=name, dots=entry["dots"], unicode=entry.get("unicode"))
+
+def sanitize_text(text: str) -> str:
+    """
+    Used for replacing specific characters with more popular characters. e.g. Em-dash
+    """
+    text = strip_diacritics(text)
+    return (text
+            #Tabs -> Spaces
+            .replace("\t", "    ")
+
+            # Dashes
+            .replace("—", "-")
+            .replace("–", "-")
+            .replace("−", "-")
+            
+            # Ellipsis
+            .replace("…", "...")
+
+            # Smart quotes
+            .replace("“", '"').replace("”", '"').replace("„", '"').replace("«", '"').replace("»", '"')
+            .replace("‘", "'").replace("’", "'").replace("‚", "'")
+
+            # Non-breaking spaces
+            .replace("\u00A0", " ")
+            .replace("\u202F", " ")
+
+            #braces -> paentheses
+            .replace("{", "(").replace("}", ")")
+
+            # backtick (markdown/code) -> apostrophe
+            .replace("`", "'")
+
+            #Special Character
+            .replace("^", "")
+            .replace("~", "")
+            .replace("_", " ")
+            .replace("|", "/")
+           )
 
 
 def encode_cells(text: str) -> List[Cell]:
@@ -29,7 +93,7 @@ def encode_cells(text: str) -> List[Cell]:
     """
     cells: List[Cell] = []
     number_mode = False
-
+    text = sanitize_text(text)
     n = len(text)
     for i, ch in enumerate(text):
         nxt = text[i + 1] if i + 1 < n else ""

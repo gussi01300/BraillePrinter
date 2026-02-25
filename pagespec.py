@@ -12,7 +12,7 @@ class PageSpec:
     margin_bottom: float = 15.0
     cell_pitch_x: float = 6.0
     line_pitch_y: float = 10.0
-    cell_with: float = 3.0
+    cell_width: float = 3.0
     cell_height: float = 6.0
 
     def cell_to_mm(self, col: int, row: int,) -> tuple[float, float]:
