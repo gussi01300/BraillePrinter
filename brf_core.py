@@ -43,7 +43,7 @@ def braille_char_to_dot_position(braille_char):
     else:
         return "000000"
 
-def braille_dot_position(dot_str, x_mm, y_mm):
+def braille_dot_position(dot_str, x_mm, y_mm, CELL_HEIGHTd, CELL_WIDTHd):
     """
     Convert 6-dot position string to specific dot coordinates, return dot position list
     :param dot_str: 6-digit braille dot position string (e.g. "101000")
@@ -55,11 +55,11 @@ def braille_dot_position(dot_str, x_mm, y_mm):
     # Relative positions of 6 braille dots (relative to cell top-left corner)
     dot_offsets = [
         (0, 0),                  # Dot 1: Top-left
-        (0, CELL_HEIGHT / 2),    # Dot 2: Top-right
-        (0, CELL_HEIGHT),        # Dot 3: Middle-left upper
-        (CELL_WIDTH, 0),         # Dot 4: Middle-right upper
-        (CELL_WIDTH, CELL_HEIGHT / 2),    # Dot 5: Middle-left lower
-        (CELL_WIDTH, CELL_HEIGHT) # Dot 6: Middle-right lower
+        (0, CELL_HEIGHTd / 2),    # Dot 2: Top-right
+        (0, CELL_HEIGHTd),        # Dot 3: Middle-left upper
+        (CELL_WIDTHd, 0),         # Dot 4: Middle-right upper
+        (CELL_WIDTHd, CELL_HEIGHTd / 2),    # Dot 5: Middle-left lower
+        (CELL_WIDTHd, CELL_HEIGHTd) # Dot 6: Middle-right lower
     ]
     
     for i in range(6):
@@ -136,7 +136,7 @@ def process_brf_file(file_path):
                 # Convert to dot positions and calculate coordinates
                 dot_str = braille_char_to_dot_position(braille_char)
                 #char_dots = braille_dot_position_1(dot_str, x_mm, y_mm)
-                char_dots = braille_dot_position(dot_str, x_mm, y_mm)  
+                char_dots = braille_dot_position(dot_str, x_mm, y_mm, CELL_HEIGHT, CELL_WIDTH)  
                 page_dots.extend(char_dots)  # Add to current page list
         
         # Add current page list to final result
