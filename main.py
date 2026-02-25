@@ -74,6 +74,8 @@ def main():
         print("File not found.")
         sys.exit()
     
+    welcome_page()
+    
     if file_path.suffix == ".txt":
         handle_txt(file_path)
 
