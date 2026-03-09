@@ -138,4 +138,3 @@ def Checkpage(line: int, page: int) -> Tuple[int, int]:
         line = 0
         page += 1
     return line, page
-    
